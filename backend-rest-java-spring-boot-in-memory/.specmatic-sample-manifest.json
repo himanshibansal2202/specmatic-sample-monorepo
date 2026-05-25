@@ -1,0 +1,51 @@
+{
+  "applicationType": "backend",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring-boot",
+  "specmaticIntegrationMode": "native",
+  "dataLayer": "in-memory",
+  "sampleId": "backend-rest-java-spring-boot-in-memory",
+  "contractSource": {
+    "gitUrl": "https://github.com/specmatic/specmatic-order-contracts.git",
+    "specPath": "io/specmatic/examples/store/openapi/api_order_v5.yaml",
+    "specFormat": "openapi",
+    "runOptionKey": "openapi"
+  },
+  "runtime": {
+    "java": "17",
+    "springBoot": "3.5.6",
+    "specmaticJunit5Support": "2.46.1"
+  },
+  "generatedFiles": [
+    "pom.xml",
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "specmatic.yaml",
+    "src/main/java/io/specmatic/sample/store/StoreApplication.java",
+    "src/main/java/io/specmatic/sample/store/ProductType.java",
+    "src/main/java/io/specmatic/sample/store/OrderStatus.java",
+    "src/main/java/io/specmatic/sample/store/ProductRequest.java",
+    "src/main/java/io/specmatic/sample/store/ProductResponse.java",
+    "src/main/java/io/specmatic/sample/store/OrderRequest.java",
+    "src/main/java/io/specmatic/sample/store/OrderUpdateRequest.java",
+    "src/main/java/io/specmatic/sample/store/OrderResponse.java",
+    "src/main/java/io/specmatic/sample/store/IdResponse.java",
+    "src/main/java/io/specmatic/sample/store/ImageResponse.java",
+    "src/main/java/io/specmatic/sample/store/JacksonConfig.java",
+    "src/main/java/io/specmatic/sample/store/ApiError.java",
+    "src/main/java/io/specmatic/sample/store/NotFoundException.java",
+    "src/main/java/io/specmatic/sample/store/UnprocessableRequestException.java",
+    "src/main/java/io/specmatic/sample/store/StoreService.java",
+    "src/main/java/io/specmatic/sample/store/StoreController.java",
+    "src/main/java/io/specmatic/sample/store/ApiExceptionHandler.java",
+    "src/main/resources/application.properties",
+    "src/test/java/io/specmatic/sample/store/ContractTest.java",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md"
+  ]
+}

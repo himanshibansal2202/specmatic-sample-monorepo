@@ -1,0 +1,32 @@
+name: Samples CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend-rest-java-spring-boot-in-memory:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-rest-java-spring-boot-in-memory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Compile
+        run: ./mvnw compile
+      - name: Test
+        run: ./mvnw test
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-rest-java-spring-boot-in-memory-reports
+          path: |
+            backend-rest-java-spring-boot-in-memory/build/reports/specmatic/**
+            backend-rest-java-spring-boot-in-memory/target/surefire-reports/**
+            backend-rest-java-spring-boot-in-memory/.specmatic/**

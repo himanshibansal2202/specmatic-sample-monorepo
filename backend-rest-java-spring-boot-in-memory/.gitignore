@@ -1,0 +1,6 @@
+target/
+.specmatic/
+specmatic-reports/
+.idea/
+*.iml
+.DS_Store
