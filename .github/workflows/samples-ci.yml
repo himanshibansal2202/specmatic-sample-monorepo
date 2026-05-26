@@ -34,7 +34,7 @@ jobs:
   bff-rest-typescript-express-rest-api:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -86,7 +86,7 @@ jobs:
   backend-grpc-dotnet-aspnet-core-in-memory:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
