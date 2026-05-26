@@ -1,0 +1,40 @@
+{
+  "sampleId": "frontend-graphql-typescript-react-graphql-service",
+  "applicationType": "frontend",
+  "protocol": "graphql",
+  "language": "typescript",
+  "framework": "react",
+  "frameworkVersion": "19.2.6",
+  "languageRuntimeTarget": "Node.js >=20.19.0",
+  "specmaticIntegrationMode": "docker-cli",
+  "dataLayer": "graphql-service",
+  "contractSource": {
+    "repository": "https://github.com/specmatic/specmatic-order-contracts.git",
+    "specPath": "io/specmatic/examples/store/graphql/products_bff.graphqls",
+    "examplesPath": "io/specmatic/examples/store/graphql/products_bff_examples",
+    "specFormat": "graphqlsdl",
+    "requiresEnterprise": true
+  },
+  "generatedFiles": [
+    "specmatic.yaml",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    "vite.config.ts",
+    "index.html",
+    "src/config.ts",
+    "src/productsBffClient.ts",
+    "src/App.tsx",
+    "src/main.tsx",
+    "src/styles.css",
+    "test/specmaticMock.ts",
+    "test/productsBffClient.contract.test.ts",
+    "Dockerfile",
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    ".gitignore"
+  ]
+}
