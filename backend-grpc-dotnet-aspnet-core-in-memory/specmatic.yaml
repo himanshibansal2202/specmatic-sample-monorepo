@@ -1,0 +1,34 @@
+version: 3
+systemUnderTest:
+  service:
+    $ref: "#/components/services/store-grpc-backend"
+    runOptions:
+      $ref: "#/components/runOptions/store-grpc-backend-tests"
+components:
+  sources:
+    order-contracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    store-grpc-backend:
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/order-contracts"
+            specs:
+              - io/specmatic/examples/store/grpc/order_api/product.proto
+              - io/specmatic/examples/store/grpc/order_api/order.proto
+  runOptions:
+    store-grpc-backend-tests:
+      protobuf:
+        type: test
+        host: "{SPECMATIC_SUT_HOST:host.docker.internal}"
+        port: "{SUT_PORT:8080}"
+        importPaths:
+          - .specmatic_grpc_working_dir
+        protocVersion: "{PROTOC_VERSION:3.23.4}"
+        requestTimeout: "{SPECMATIC_REQUEST_TIMEOUT_MS:10000}"
+specmatic:
+  settings:
+    test:
+      schemaResiliencyTests: none

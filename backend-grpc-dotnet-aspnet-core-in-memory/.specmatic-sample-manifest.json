@@ -1,0 +1,43 @@
+{
+  "sampleId": "backend-grpc-dotnet-aspnet-core-in-memory",
+  "applicationType": "backend",
+  "protocol": "grpc",
+  "language": "dotnet",
+  "framework": "aspnet-core",
+  "specmaticIntegrationMode": "test-container",
+  "dataLayer": "in-memory",
+  "frameworkVersion": "8.0",
+  "languageRuntimeTarget": "net8.0",
+  "contractSource": {
+    "gitUrl": "https://github.com/specmatic/specmatic-order-contracts.git",
+    "specRoot": "io/specmatic/examples/store/grpc",
+    "systemUnderTestSpecs": [
+      "io/specmatic/examples/store/grpc/order_api/product.proto",
+      "io/specmatic/examples/store/grpc/order_api/order.proto"
+    ],
+    "specFormat": "protobuf",
+    "runOptionKey": "protobuf",
+    "requiresEnterprise": true
+  },
+  "generatedFiles": [
+    "backend-grpc-dotnet-aspnet-core-in-memory.sln",
+    "specmatic.yaml",
+    "README.md",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "src/StoreGrpcBackend/StoreGrpcBackend.csproj",
+    "src/StoreGrpcBackend/Program.cs",
+    "src/StoreGrpcBackend/Services/StoreRepository.cs",
+    "src/StoreGrpcBackend/Services/ProductGrpcService.cs",
+    "src/StoreGrpcBackend/Services/OrderGrpcService.cs",
+    "src/StoreGrpcBackend/Protos/order_api/product.proto",
+    "src/StoreGrpcBackend/Protos/order_api/order.proto",
+    "src/StoreGrpcBackend/Protos/order_api/product_types.proto",
+    "src/StoreGrpcBackend/Protos/order_api/order_types.proto",
+    "src/StoreGrpcBackend/Protos/buf/validate/validate.proto",
+    "tests/StoreGrpcBackend.ContractTests/StoreGrpcBackend.ContractTests.csproj",
+    "tests/StoreGrpcBackend.ContractTests/SpecmaticContractTests.cs"
+  ]
+}

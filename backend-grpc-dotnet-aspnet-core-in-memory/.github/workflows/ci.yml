@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Restore
+        run: dotnet restore backend-grpc-dotnet-aspnet-core-in-memory.sln
+      - name: Build
+        run: dotnet build backend-grpc-dotnet-aspnet-core-in-memory.sln --no-restore
+      - name: Contract tests
+        env:
+          SPECMATIC_IMAGE: specmatic/enterprise:latest
+          PROTOC_VERSION: "3.23.4"
+        run: dotnet test backend-grpc-dotnet-aspnet-core-in-memory.sln --no-build --logger trx
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-grpc-dotnet-aspnet-core-in-memory-reports-${{ matrix.os }}
+          path: |
+            build/reports/specmatic/**
+            **/TestResults/**
+            .specmatic/**
+
+  docker:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t backend-grpc-dotnet-aspnet-core-in-memory:latest .
