@@ -1,0 +1,22 @@
+version: 3
+dependencies:
+  services:
+    - service:
+        $ref: "#/components/services/bff-service"
+components:
+  sources:
+    order-contracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    bff-service:
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/order-contracts"
+            specs:
+              - io/specmatic/examples/store/openapi/product_search_bff_v6.yaml
+specmatic:
+  settings:
+    test:
+      schemaResiliencyTests: none
