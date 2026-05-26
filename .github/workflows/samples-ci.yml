@@ -30,3 +30,31 @@ jobs:
             backend-rest-java-spring-boot-in-memory/build/reports/specmatic/**
             backend-rest-java-spring-boot-in-memory/target/surefire-reports/**
             backend-rest-java-spring-boot-in-memory/.specmatic/**
+
+  bff-rest-typescript-express-rest-api:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: bff-rest-typescript-express-rest-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: bff-rest-typescript-express-rest-api/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bff-rest-typescript-express-rest-api-reports-${{ matrix.os }}
+          path: |
+            bff-rest-typescript-express-rest-api/build/reports/specmatic/**
+            bff-rest-typescript-express-rest-api/.specmatic/**

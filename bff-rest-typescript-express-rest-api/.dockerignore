@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+coverage
+.specmatic
+specmatic-reports
+.git
+.github
+.DS_Store
+*.log

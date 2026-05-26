@@ -1,0 +1,45 @@
+version: 3
+systemUnderTest:
+  service:
+    $ref: "#/components/services/order_bff"
+    runOptions:
+      $ref: "#/components/runOptions/order_bff_test"
+dependencies:
+  services:
+    - service:
+        $ref: "#/components/services/order_api"
+        runOptions:
+          $ref: "#/components/runOptions/order_api_mock"
+components:
+  sources:
+    order_contracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    order_bff:
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/order_contracts"
+            specs:
+              - io/specmatic/examples/store/openapi/product_search_bff_v6.yaml
+    order_api:
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/order_contracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+  runOptions:
+    order_bff_test:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+    order_api_mock:
+      openapi:
+        type: mock
+        baseUrl: "{STUB_BASE_URL:http://localhost:8090}"
+specmatic:
+  settings:
+    test:
+      schemaResiliencyTests: none
