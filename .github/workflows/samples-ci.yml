@@ -60,10 +60,7 @@ jobs:
             bff-rest-typescript-express-rest-api/.specmatic/**
 
   frontend-rest-typescript-react-rest-api:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend-rest-typescript-react-rest-api
@@ -82,6 +79,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-rest-typescript-react-rest-api-reports-${{ matrix.os }}
+          name: frontend-rest-typescript-react-rest-api-reports
           path: |
             frontend-rest-typescript-react-rest-api/.specmatic/**
