@@ -143,3 +143,35 @@ jobs:
           path: |
             backend-grpc-dotnet-aspnet-core-in-memory/build/reports/specmatic/**
             backend-grpc-dotnet-aspnet-core-in-memory/.specmatic/**
+
+  backend-rest-javascript-express-in-memory:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: backend-rest-javascript-express-in-memory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: backend-rest-javascript-express-in-memory/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-rest-javascript-express-in-memory-reports-${{ matrix.os }}
+          path: |
+            backend-rest-javascript-express-in-memory/build/reports/specmatic/**
+            backend-rest-javascript-express-in-memory/.specmatic/**
