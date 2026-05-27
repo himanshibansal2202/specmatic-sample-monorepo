@@ -10,6 +10,7 @@ const reportDir = resolve("build/reports/specmatic");
 const sutBaseUrl = process.env.SUT_BASE_URL ?? "http://host.docker.internal:8080";
 const stubBaseUrl = process.env.STUB_BASE_URL ?? "http://localhost:8090";
 const specmaticStubBaseUrl = process.env.SPECMATIC_STUB_BASE_URL ?? "http://host.docker.internal:8090";
+const hostGatewayArgs = ["--add-host", "host.docker.internal:host-gateway"];
 let mockContainerId: string | undefined;
 
 mkdirSync(reportDir, { recursive: true });
@@ -58,6 +59,7 @@ async function startBackendMock(): Promise<string> {
     "--rm",
     "-p",
     "8090:8090",
+    ...hostGatewayArgs,
     "-v",
     `${process.cwd()}:/usr/src/app`,
     "-w",
@@ -77,6 +79,7 @@ async function runSpecmatic(): Promise<void> {
   const args = [
     "run",
     "--rm",
+    ...hostGatewayArgs,
     "-v",
     `${process.cwd()}:/usr/src/app`,
     "-w",
