@@ -1,0 +1,51 @@
+{
+  "id": "bff-rest-java-spring-in-memory",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring",
+  "data_layer": "in-memory",
+  "integration_mode": "docker-cli",
+  "contract_version": "6.0",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw -version",
+  "generated_files": [
+    "pom.xml",
+    "src/main/resources/application.yml",
+    "src/main/java/io/specmatic/sample/bff/BffApplication.java",
+    "src/main/java/io/specmatic/sample/bff/config/BackendProperties.java",
+    "src/main/java/io/specmatic/sample/bff/config/ClientConfig.java",
+    "src/main/java/io/specmatic/sample/bff/model/BadRequestBody.java",
+    "src/main/java/io/specmatic/sample/bff/model/HeaderItem.java",
+    "src/main/java/io/specmatic/sample/bff/model/IdResponse.java",
+    "src/main/java/io/specmatic/sample/bff/model/MonitorResponse.java",
+    "src/main/java/io/specmatic/sample/bff/model/Order.java",
+    "src/main/java/io/specmatic/sample/bff/model/OrderBase.java",
+    "src/main/java/io/specmatic/sample/bff/model/Product.java",
+    "src/main/java/io/specmatic/sample/bff/model/ProductBase.java",
+    "src/main/java/io/specmatic/sample/bff/service/BackendClient.java",
+    "src/main/java/io/specmatic/sample/bff/web/BffController.java",
+    "src/main/java/io/specmatic/sample/bff/web/ContractErrorHandler.java",
+    "src/test/java/io/specmatic/sample/bff/ContractTest.java",
+    "specmatic.yaml",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "learnings": [
+    "Local verification used Java 17 because it is the installed JDK; Spring Boot 4.0.6 supports Java 17 or newer.",
+    "schemaResiliencyTests none and positiveOnly had zero contract failures but did not satisfy the checked-in 70% API coverage gate; schemaResiliencyTests all passed with 228 tests and 70%+ coverage.",
+    "The BFF keeps the backend client boundary but returns contract-valid fallback responses when the Docker-managed dependency mock closes unmatched connections during contract generation."
+  ]
+}

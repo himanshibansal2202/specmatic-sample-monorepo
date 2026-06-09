@@ -1,0 +1,16 @@
+server:
+  port: ${SUT_PORT:8080}
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,mappings
+
+backend:
+  base-url: ${STUB_BASE_URL:http://localhost:8090}
+  api-key: ${BACKEND_API_KEY:sample-api-key}
+  idempotency-key: ${BACKEND_IDEMPOTENCY_KEY:00000000-0000-0000-0000-000000000001}

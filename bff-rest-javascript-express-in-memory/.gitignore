@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+build/
+dist/
+.specmatic/
+*.log
+test/contract-state.json

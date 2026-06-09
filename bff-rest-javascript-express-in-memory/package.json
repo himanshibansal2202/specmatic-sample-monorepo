@@ -1,0 +1,30 @@
+{
+  "name": "bff-rest-javascript-express-in-memory",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Specmatic BFF sample for REST OpenAPI using JavaScript and Express.",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:contract": "jest --runInBand --detectOpenHandles"
+  },
+  "dependencies": {
+    "express": "5.1.0"
+  },
+  "devDependencies": {
+    "jest": "30.0.0",
+    "specmatic": "2.46.4",
+    "wait-on": "8.0.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/contract.test.js"
+    ],
+    "globalSetup": "./test/global-setup.js"
+  }
+}

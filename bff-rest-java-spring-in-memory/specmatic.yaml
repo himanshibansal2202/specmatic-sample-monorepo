@@ -1,0 +1,80 @@
+version: 3
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/orderBff"
+    runOptions:
+      $ref: "#/components/runOptions/orderBffTest"
+
+dependencies:
+  services:
+    - service:
+        $ref: "#/components/services/orderApi"
+        runOptions:
+          $ref: "#/components/runOptions/orderApiMock"
+    - service:
+        $ref: "#/components/services/productAuditKafka"
+        runOptions:
+          $ref: "#/components/runOptions/productAuditKafkaMock"
+  settings:
+    startTimeoutInMilliseconds: 20000
+
+components:
+  sources:
+    specmaticOrderContracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    orderBff:
+      description: Order BFF REST API
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/product_search_bff_v6.yaml
+    orderApi:
+      description: Backend Order REST API mock
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+    productAuditKafka:
+      description: Product audit Kafka mock
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/asyncapi/kafka.yaml
+  runOptions:
+    orderBffTest:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+        actuatorUrl: "{SUT_BASE_URL:http://localhost:8080}/actuator/mappings"
+    orderApiMock:
+      openapi:
+        type: mock
+        baseUrl: "{STUB_BASE_URL:http://localhost:8090}"
+    productAuditKafkaMock:
+      asyncapi:
+        type: mock
+        inMemoryBroker:
+          host: "{BROKER_HOST:localhost}"
+          port: "{BROKER_PORT:9092}"
+        servers:
+          - host: "{BROKER_URL:localhost:9092}"
+            protocol: kafka
+
+specmatic:
+  governance:
+    successCriteria:
+      minCoveragePercentage: 70
+      maxMissedOperationsInSpec: 1
+      enforce: true
+  settings:
+    test:
+      schemaResiliencyTests: all
