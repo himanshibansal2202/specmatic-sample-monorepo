@@ -1,0 +1,19 @@
+server:
+  port: ${SUT_PORT:8080}
+
+backend:
+  base-url: ${STUB_BASE_URL:http://localhost:8090}
+  api-key: ${BACKEND_API_KEY:sample-api-key}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,mappings
+  endpoint:
+    health:
+      show-details: never
+
+spring:
+  application:
+    name: specmatic-bff-rest-java-spring-boot

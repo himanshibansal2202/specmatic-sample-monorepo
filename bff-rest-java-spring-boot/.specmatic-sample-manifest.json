@@ -1,0 +1,63 @@
+{
+  "id": "bff-rest-java-spring-boot",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring-boot",
+  "framework_version": "3.5.15",
+  "language_runtime": "Java 17",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.18.0",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_repo": "https://github.com/specmatic/specmatic-order-contracts.git",
+  "contract_version": "6.0",
+  "resolved_contracts": {
+    "system_under_test": "io/specmatic/examples/store/openapi/product_search_bff_v6.yaml",
+    "dependencies": [
+      "io/specmatic/examples/store/openapi/api_order_v5.yaml",
+      "io/specmatic/examples/store/asyncapi/kafka.yaml"
+    ]
+  },
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw -q -DskipTests package",
+  "generated_files": [
+    "pom.xml",
+    "specmatic.yaml",
+    "src/main/resources/application.yml",
+    "src/main/java/io/specmatic/examples/bff/BffApplication.java",
+    "src/main/java/io/specmatic/examples/bff/ApiModels.java",
+    "src/main/java/io/specmatic/examples/bff/BackendClient.java",
+    "src/main/java/io/specmatic/examples/bff/BffController.java",
+    "src/main/java/io/specmatic/examples/bff/ApiExceptionHandler.java",
+    "src/main/java/io/specmatic/examples/bff/JacksonConfig.java",
+    "src/test/java/io/specmatic/examples/bff/ContractTest.java",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "mvnw",
+    "mvnw.cmd",
+    "Dockerfile",
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "learnings": [
+    "Specmatic Enterprise CLI mode uses run-suite so REST and Kafka dependency mocks start from the single root specmatic.yaml before tests run.",
+    "Level 1 and Level 2 had zero scenario failures but did not satisfy the 70% coverage gate because error responses are exercised only by full schema resiliency for this contract.",
+    "Spring/Jackson scalar coercion accepted numeric and boolean product names as strings; the generated request model preserves the raw JSON type and validates the BFF contract boundary explicitly.",
+    "GET /orders scenarios are tagged WIP in the executable contract. Specmatic reports them as WIP, not failures."
+  ]
+}

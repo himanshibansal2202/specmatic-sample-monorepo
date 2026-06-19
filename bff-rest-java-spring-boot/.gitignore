@@ -1,0 +1,8 @@
+target/
+.specmatic/
+build/reports/
+kafka-logs/
+*.log
+.DS_Store
+.idea/
+.vscode/

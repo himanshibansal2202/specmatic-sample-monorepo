@@ -1,0 +1,8 @@
+target/
+.specmatic/
+kafka-logs/
+.git/
+.github/
+build/reports/
+*.log
+.DS_Store
