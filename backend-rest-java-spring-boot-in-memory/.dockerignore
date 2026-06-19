@@ -1,7 +1,0 @@
-target
-.specmatic
-specmatic-reports
-.git
-.github
-.idea
-*.iml

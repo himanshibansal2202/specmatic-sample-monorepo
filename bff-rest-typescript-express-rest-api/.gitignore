@@ -1,8 +1,0 @@
-node_modules/
-dist/
-build/
-coverage/
-.specmatic/
-specmatic-reports/
-.DS_Store
-*.log

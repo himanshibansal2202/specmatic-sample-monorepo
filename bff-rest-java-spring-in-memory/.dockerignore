@@ -1,8 +1,0 @@
-target/
-.specmatic/
-.mvn/
-build/
-*.log
-.DS_Store
-.git/
-.github/

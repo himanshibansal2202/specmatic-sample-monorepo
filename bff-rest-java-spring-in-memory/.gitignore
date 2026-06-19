@@ -1,7 +1,0 @@
-target/
-.specmatic/
-build/
-*.log
-.DS_Store
-.idea/
-*.iml
