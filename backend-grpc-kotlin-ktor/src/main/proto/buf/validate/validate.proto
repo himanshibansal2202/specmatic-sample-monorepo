@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package buf.validate;
+
+import "google/protobuf/descriptor.proto";
+
+message FieldRules {
+  optional bool required = 25;
+  optional EnumRules enum = 16;
+}
+
+message EnumRules {
+  optional bool defined_only = 1;
+}
+
+extend google.protobuf.FieldOptions {
+  optional FieldRules field = 1160;
+}

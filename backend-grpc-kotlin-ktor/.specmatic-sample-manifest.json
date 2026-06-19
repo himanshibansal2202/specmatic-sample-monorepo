@@ -1,0 +1,57 @@
+{
+  "id": "backend-grpc-kotlin-ktor",
+  "application_type": "backend",
+  "protocol": "grpc",
+  "language": "kotlin",
+  "framework": "ktor",
+  "data_layer": "in-memory",
+  "integration_mode": "native",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:grpc-min",
+    "version": "1.18.0",
+    "source": "maven-central",
+    "invocation": "native-api"
+  },
+  "contract_version": "order_api",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw -DskipTests compile",
+  "generated_files": [
+    "pom.xml",
+    "specmatic.yaml",
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "src/main/proto/order_api/product.proto",
+    "src/main/proto/order_api/product_types.proto",
+    "src/main/proto/order_api/order.proto",
+    "src/main/proto/order_api/order_types.proto",
+    "src/main/proto/buf/validate/validate.proto",
+    "src/main/kotlin/io/specmatic/samples/store/AppConfig.kt",
+    "src/main/kotlin/io/specmatic/samples/store/Application.kt",
+    "src/main/kotlin/io/specmatic/samples/store/StoreApplication.kt",
+    "src/main/kotlin/io/specmatic/samples/store/inventory/InventoryClient.kt",
+    "src/main/kotlin/io/specmatic/samples/store/inventory/InMemoryInventoryClient.kt",
+    "src/main/kotlin/io/specmatic/samples/store/model/Models.kt",
+    "src/main/kotlin/io/specmatic/samples/store/persistence/StoreRepository.kt",
+    "src/main/kotlin/io/specmatic/samples/store/grpc/ProductGrpcService.kt",
+    "src/main/kotlin/io/specmatic/samples/store/grpc/OrderGrpcService.kt",
+    "src/test/kotlin/io/specmatic/samples/store/ContractTest.kt",
+    ".github/workflows/ci.yml",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    "README.md",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 11, "passed": 11, "failed": 0 },
+    "level2_positiveOnly": { "tests": 32, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 49, "passed": 49, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "learnings": [
+    "Excluded io.netty:netty-bom from io.specmatic.enterprise:grpc-min because the Enterprise POM declares it as a normal JAR transitive while Maven Central publishes it as a BOM POM.",
+    "Staged imported gRPC type and validation protos into .specmatic_grpc_working_dir during the native test adapter because the Enterprise gRPC runner resolves contract imports from that working directory."
+  ]
+}
