@@ -5,9 +5,30 @@ on:
   pull_request:
 
 jobs:
-  no-samples:
-    name: No samples configured
+  backend-rest-python-fastapi:
+    name: backend-rest-python-fastapi
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-rest-python-fastapi
     steps:
-      - name: Skip sample CI
-        run: echo "No samples are currently configured for CI."
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: pytest test -v -s
+      - name: Upload Specmatic reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: specmatic-reports-backend-rest-python-fastapi
+          path: backend-rest-python-fastapi/build/reports/specmatic

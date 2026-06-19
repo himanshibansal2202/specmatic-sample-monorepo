@@ -1,0 +1,63 @@
+{
+  "id": "backend-rest-python-fastapi",
+  "application_type": "backend",
+  "protocol": "rest",
+  "language": "python",
+  "framework": "fastapi",
+  "framework_version": "0.137.1",
+  "language_runtime_target": "Python 3.14.6",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.18.0",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_repo": "https://github.com/specmatic/specmatic-order-contracts.git",
+  "contract_spec": "io/specmatic/examples/store/openapi/api_order_v5.yaml",
+  "contract_version": "5.0",
+  "port": 8080,
+  "test_command": "pytest test -v -s",
+  "install_command": "pip install -r requirements.txt",
+  "generated_files": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".specmatic-sample-manifest.json",
+    "Dockerfile",
+    "README.md",
+    "assets/specmatic-order-backend-architecture.gif",
+    "requirements.txt",
+    "scripts/run_app.py",
+    "specmatic.yaml",
+    "src/app/__init__.py",
+    "src/app/main.py",
+    "test/test_contract.py"
+  ],
+  "testCoverage": {
+    "level1_none": {
+      "tests": 31,
+      "passed": 31,
+      "failed": 0
+    },
+    "level2_positiveOnly": {
+      "tests": 74,
+      "passed": 74,
+      "failed": 0
+    },
+    "level3_all": {
+      "tests": 293,
+      "passed": 293,
+      "failed": 0
+    },
+    "shipped_level": "all",
+    "apiCoveragePercent": 68,
+    "governanceThresholdPercent": 65
+  },
+  "learnings": [
+    "Pydantic coerces JSON booleans to integers unless strict fields are used; Product inventory and Order numeric fields are strict so negative Specmatic resiliency tests return 400.",
+    "Idempotency-Key headers are typed as UUID so Specmatic header mutation tests return 400 instead of creating resources.",
+    "Example-only and positive-only verification had zero Specmatic failures but returned non-zero because enforced governance coverage is only satisfied in full schema resiliency mode."
+  ]
+}
