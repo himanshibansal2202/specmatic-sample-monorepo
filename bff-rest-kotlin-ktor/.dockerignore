@@ -1,0 +1,7 @@
+target/
+build/
+.specmatic/
+.git/
+.idea/
+*.iml
+*.log
