@@ -1,0 +1,9 @@
+target/
+build/
+.specmatic/
+.specmatic-runtime/
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store

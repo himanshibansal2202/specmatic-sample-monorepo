@@ -1,0 +1,37 @@
+version: 3
+specmatic:
+  governance:
+    successCriteria:
+      minCoveragePercentage: 65
+      maxMissedOperationsInSpec: 1
+      enforce: true
+  settings:
+    test:
+      schemaResiliencyTests: all
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/order-api"
+    runOptions:
+      $ref: "#/components/runOptions/order-api-tests"
+
+components:
+  sources:
+    order-contracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    order-api:
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/order-contracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+  runOptions:
+    order-api-tests:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+        filter: "PATH!='/actuator,/actuator/health,/actuator/mappings,/error'"
+        actuatorUrl: "{SUT_BASE_URL:http://localhost:8080}/actuator/mappings"

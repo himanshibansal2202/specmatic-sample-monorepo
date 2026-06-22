@@ -1,0 +1,10 @@
+package io.specmatic.examples.store.model;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
+public record OrderBase(
+        @NotNull Integer productid,
+        @NotNull @Min(1) Integer count
+) {
+}
