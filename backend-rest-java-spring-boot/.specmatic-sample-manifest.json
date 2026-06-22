@@ -1,0 +1,76 @@
+{
+  "id": "backend-rest-java-spring-boot",
+  "application_type": "backend",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring-boot",
+  "framework_version": "4.1.0",
+  "language_runtime": "Java 17",
+  "data_layer": "in-memory",
+  "integration_mode": "native",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:openapi-min",
+    "version": "1.18.0",
+    "source": "maven-central",
+    "invocation": "native-api"
+  },
+  "contract_source": {
+    "repo": "https://github.com/specmatic/specmatic-order-contracts.git",
+    "spec": "io/specmatic/examples/store/openapi/api_order_v5.yaml"
+  },
+  "contract_version": "5.0",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "mvn test-compile",
+  "generated_files": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".specmatic-sample-manifest.json",
+    "Dockerfile",
+    "README.md",
+    "assets/specmatic-order-backend-architecture.gif",
+    "mvnw",
+    "mvnw.cmd",
+    "pom.xml",
+    "specmatic.yaml",
+    "src/main/java/io/specmatic/examples/store/OrderApiApplication.java",
+    "src/main/java/io/specmatic/examples/store/api/OrderController.java",
+    "src/main/java/io/specmatic/examples/store/api/ProductController.java",
+    "src/main/java/io/specmatic/examples/store/api/RequestParser.java",
+    "src/main/java/io/specmatic/examples/store/config/ApiExceptionHandler.java",
+    "src/main/java/io/specmatic/examples/store/model/ErrorResponseBody.java",
+    "src/main/java/io/specmatic/examples/store/model/IdResponse.java",
+    "src/main/java/io/specmatic/examples/store/model/ImageUpdateResponse.java",
+    "src/main/java/io/specmatic/examples/store/model/Order.java",
+    "src/main/java/io/specmatic/examples/store/model/OrderBase.java",
+    "src/main/java/io/specmatic/examples/store/model/OrderStatus.java",
+    "src/main/java/io/specmatic/examples/store/model/OrderUpdate.java",
+    "src/main/java/io/specmatic/examples/store/model/Product.java",
+    "src/main/java/io/specmatic/examples/store/model/ProductBase.java",
+    "src/main/java/io/specmatic/examples/store/model/ProductType.java",
+    "src/main/java/io/specmatic/examples/store/service/InMemoryInventoryClient.java",
+    "src/main/java/io/specmatic/examples/store/service/InventoryClient.java",
+    "src/main/java/io/specmatic/examples/store/service/ResourceNotFoundException.java",
+    "src/main/java/io/specmatic/examples/store/service/StoreService.java",
+    "src/main/java/io/specmatic/examples/store/service/UnprocessableRequestException.java",
+    "src/main/resources/application.properties",
+    "src/test/java/io/specmatic/examples/store/ContractTest.java"
+  ],
+  "assets": [
+    "assets/specmatic-order-backend-architecture.gif"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 31, "passed": 31, "failed": 0 },
+    "level2_positiveOnly": { "tests": 74, "passed": 74, "failed": 0 },
+    "level3_all": { "tests": 293, "passed": 293, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "learnings": [
+    "The requested Java 21 target was adjusted to Java 17 because the local verification environment only had JDK 17 installed.",
+    "The native Specmatic runtime rejected an unsupported specmatic.reports configuration block, so the sample uses the runtime-generated default reports under build/reports/specmatic/test.",
+    "Full schema resiliency required explicit JSON map parsing to avoid Jackson scalar coercion and default error payloads for invalid request bodies.",
+    "Actuator endpoint discovery is wired via actuatorUrl, and a runOptions.openapi.filter excludes infra paths (/actuator, /actuator/health, /actuator/mappings, /error) so only the 31 contract operations are counted for coverage.",
+    "Verified coverage is 68%; governance is enforced at 65% (backend baseline) to leave margin rather than pinning the threshold to the exact achieved value. 404 and 422 response rows without contract examples remain untested by generated positive flows."
+  ]
+}
