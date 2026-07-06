@@ -1,0 +1,9 @@
+node_modules/
+dist/
+coverage/
+build/
+.specmatic/
+.testcontainers/
+*.log
+.DS_Store
+*.tsbuildinfo

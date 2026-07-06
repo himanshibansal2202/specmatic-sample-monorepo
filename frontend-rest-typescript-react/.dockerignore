@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+build
+.specmatic
+.testcontainers
+.git
+.github
+*.log
+*.tsbuildinfo

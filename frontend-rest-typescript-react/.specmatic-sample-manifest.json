@@ -1,0 +1,83 @@
+{
+  "id": "frontend-rest-typescript-react",
+  "application_type": "frontend",
+  "protocol": "rest",
+  "language": "typescript",
+  "framework": "react",
+  "data_layer": "in-memory",
+  "integration_mode": "test-container",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.0",
+    "source": "docker-hub",
+    "invocation": "testcontainers"
+  },
+  "contract_version": "6.0",
+  "port": 3000,
+  "test_command": "npm test",
+  "install_command": "npm ci",
+  "generated_files": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".specmatic-sample-manifest.json",
+    "Dockerfile",
+    "README.md",
+    "assets/specmatic-order-frontend-architecture.gif",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "specmatic.yaml",
+    "src/App.tsx",
+    "src/api/orderBffClient.ts",
+    "src/components/StoreDashboard.tsx",
+    "src/config.ts",
+    "src/main.tsx",
+    "src/styles.css",
+    "src/vite-env.d.ts",
+    "test/orderBffClient.contract.test.ts",
+    "tsconfig.app.json",
+    "tsconfig.json",
+    "tsconfig.node.json",
+    "vite.config.ts"
+  ],
+  "contracts": {
+    "repository": "https://github.com/specmatic/specmatic-order-contracts.git",
+    "consumed": [
+      "io/specmatic/examples/store/openapi/product_search_bff_v6.yaml"
+    ]
+  },
+  "contractFacts": {
+    "operations": [
+      "POST /products",
+      "GET /findAvailableProducts",
+      "POST /orders",
+      "GET /orders",
+      "GET /monitor/{id}"
+    ],
+    "requiredHeaders": {
+      "GET /findAvailableProducts": ["pageSize"]
+    },
+    "requiredQueryParameters": {
+      "GET /findAvailableProducts": ["from-date", "to-date"]
+    }
+  },
+  "testCoverage": {
+    "level1_none": { "tests": 0, "passed": 0, "failed": 0 },
+    "level2_positiveOnly": { "tests": 0, "passed": 0, "failed": 0 },
+    "level3_all": { "tests": 5, "passed": 5, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": null
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "Frontend samples run Specmatic in mock mode, so progressive provider resiliency levels are skipped and Vitest workflow coverage is recorded under the shipped all mode.",
+    "Specmatic Enterprise 1.19.0 writes mock-mode HTML and CTRF reports during graceful shutdown; the Testcontainers adapter sends SIGINT before stopping the container.",
+    "Local Colima verification required DOCKER_HOST and TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE environment variables for Testcontainers to reach Docker."
+  ]
+}
