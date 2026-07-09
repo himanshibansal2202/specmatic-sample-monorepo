@@ -1,0 +1,67 @@
+{
+  "id": "frontend-rest-typescript-react",
+  "application_type": "frontend",
+  "protocol": "rest",
+  "language": "typescript",
+  "framework": "react",
+  "data_layer": "none",
+  "integration_mode": "test-container",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.1",
+    "source": "docker-hub",
+    "invocation": "testcontainers"
+  },
+  "contract_version": "6.0",
+  "port": 3000,
+  "test_command": "npm test",
+  "install_command": "npm ci",
+  "generated_files": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    "vite.config.ts",
+    "index.html",
+    "src/config.ts",
+    "src/api.ts",
+    "src/App.tsx",
+    "src/main.tsx",
+    "src/styles.css",
+    "src/vite-env.d.ts",
+    "test/setup.ts",
+    "test/run-tests.mjs",
+    "test/specmaticMock.ts",
+    "test/bffClient.contract.test.ts",
+    "test/App.test.tsx",
+    "test/test-env.d.ts",
+    "specmatic.yaml",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-frontend-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 0, "passed": 0, "failed": 0 },
+    "level2_positiveOnly": { "tests": 0, "passed": 0, "failed": 0 },
+    "level3_all": { "tests": 4, "passed": 4, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic/stub",
+    "coverageGovernance": null
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "Frontend samples run Specmatic in mock mode, so progressive schema resiliency levels are not applicable; the React/Vitest suite verified 4 consumer workflow tests against the Specmatic mock.",
+    "Specmatic Enterprise 1.19.1 reports mock output under build/reports/specmatic/stub when outputDirectory is build/reports/specmatic.",
+    "The generated test runner detects the Docker CLI context so Colima users do not need to export DOCKER_HOST manually; it disables Ryuk only for the Colima socket case.",
+    "TypeScript is pinned to 5.9.3 because the current latest TypeScript package in this environment is 7.0.2 and changed DOM library packaging."
+  ]
+}
