@@ -1,0 +1,31 @@
+name: backend-rest-typescript-express
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: npm test
+      - name: Upload Specmatic reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: specmatic-reports
+          path: build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        run: docker build -t backend-rest-typescript-express .

@@ -31,3 +31,30 @@ jobs:
         with:
           name: bff-rest-java-spring-boot-specmatic-reports-${{ matrix.os }}
           path: bff-rest-java-spring-boot/build/reports/specmatic
+
+  backend-rest-typescript-express:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-rest-typescript-express
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: backend-rest-typescript-express/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-rest-typescript-express-specmatic-reports
+          path: backend-rest-typescript-express/build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        run: docker build -t backend-rest-typescript-express .

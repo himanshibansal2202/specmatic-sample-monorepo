@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+.specmatic
+.git
+.env
+npm-debug.log
+coverage

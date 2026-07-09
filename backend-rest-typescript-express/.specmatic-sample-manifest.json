@@ -1,0 +1,58 @@
+{
+  "id": "backend-rest-typescript-express",
+  "application_type": "backend",
+  "protocol": "rest",
+  "language": "typescript",
+  "framework": "express",
+  "data_layer": "in-memory",
+  "integration_mode": "test-container",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.1",
+    "source": "docker-hub",
+    "invocation": "testcontainers"
+  },
+  "contract_version": "5.0",
+  "port": 8080,
+  "test_command": "npm test",
+  "install_command": "npm install",
+  "generated_files": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "specmatic.yaml",
+    "src/config.ts",
+    "src/store.ts",
+    "src/app.ts",
+    "src/server.ts",
+    "test/contract.test.ts",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-backend-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 31, "passed": 31, "failed": 0 },
+    "level2_positiveOnly": { "tests": 74, "passed": 74, "failed": 0 },
+    "level3_all": { "tests": 293, "passed": 293, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 68,
+      "maxMissedOperationsInSpec": 0,
+      "enforce": true
+    }
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "Endpoint discovery was not configured because the allowlisted Specmatic documentation only documents actuatorUrl for Spring Boot, not Express route discovery.",
+    "Coverage governance ships at the measured final threshold of 68% because the contract declares 404 and 422 responses that Specmatic Enterprise 1.19.1 did not generate without matching examples."
+  ]
+}
