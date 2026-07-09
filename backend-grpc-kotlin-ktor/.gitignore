@@ -1,0 +1,7 @@
+target/
+build/
+.specmatic/
+.specmatic_grpc_working_dir/
+*.pb
+*.log
+.DS_Store

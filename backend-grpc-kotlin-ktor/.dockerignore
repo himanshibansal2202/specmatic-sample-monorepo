@@ -1,0 +1,8 @@
+target/
+build/
+.specmatic/
+.specmatic_grpc_working_dir/
+.git/
+.github/
+*.log
+.DS_Store

@@ -1,0 +1,60 @@
+{
+  "id": "backend-grpc-kotlin-ktor",
+  "application_type": "backend",
+  "protocol": "grpc",
+  "language": "kotlin",
+  "framework": "ktor",
+  "data_layer": "in-memory",
+  "integration_mode": "docker-cli",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.1",
+    "source": "docker-hub",
+    "invocation": "docker run"
+  },
+  "contract_version": "order_api",
+  "port": 8080,
+  "test_command": "./scripts/test.sh",
+  "install_command": "./mvnw -q -DskipTests package",
+  "generated_files": [
+    "pom.xml",
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "specmatic.yaml",
+    "scripts/test.sh",
+    "src/main/proto/order_api/product.proto",
+    "src/main/proto/order_api/product_types.proto",
+    "src/main/proto/order_api/order.proto",
+    "src/main/proto/order_api/order_types.proto",
+    "src/main/proto/buf/validate/validate.proto",
+    "src/main/kotlin/io/specmatic/examples/store/Store.kt",
+    "src/main/kotlin/io/specmatic/examples/store/ProductGrpcService.kt",
+    "src/main/kotlin/io/specmatic/examples/store/OrderGrpcService.kt",
+    "src/main/kotlin/io/specmatic/examples/store/OrderApiServer.kt",
+    "Dockerfile",
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    "README.md",
+    "assets/specmatic-order-backend-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 11, "passed": 11, "failed": 0 },
+    "level2_positiveOnly": { "tests": 32, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 49, "passed": 49, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/specmatic-reports",
+    "coverageGovernance": null
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "Ktor 3.2.0 does not publish a gRPC server artifact in Maven Central; the generated backend uses grpc-kotlin/Netty for the gRPC transport and keeps Ktor as the selected framework dependency surface.",
+    "Specmatic Enterprise 1.19.1 accepts v3 protobuf run options but does not apply protobuf import-path fields from specmatic.yaml; the test script stages imported proto support files in .specmatic_grpc_working_dir, which the runtime already includes in its descriptor-generation proto path."
+  ]
+}

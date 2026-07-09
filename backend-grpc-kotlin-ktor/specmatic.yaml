@@ -1,0 +1,40 @@
+version: 3
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/orderApi"
+    runOptions:
+      $ref: "#/components/runOptions/orderApiTest"
+
+components:
+  sources:
+    specmaticOrderContracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    orderApi:
+      description: Store Order API gRPC backend
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/grpc/order_api/product.proto
+              - io/specmatic/examples/store/grpc/order_api/order.proto
+  runOptions:
+    orderApiTest:
+      protobuf:
+        type: test
+        host: "{SUT_HOST_FOR_SPECMATIC:host.docker.internal}"
+        port: "{SUT_PORT:8080}"
+
+specmatic:
+  governance:
+    report:
+      formats:
+        - html
+        - ctrf
+      outputDirectory: build/specmatic-reports
+  settings:
+    test:
+      schemaResiliencyTests: all
