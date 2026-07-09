@@ -1,0 +1,6 @@
+.pytest_cache/
+.specmatic/
+.venv/
+__pycache__/
+build/
+tools/
