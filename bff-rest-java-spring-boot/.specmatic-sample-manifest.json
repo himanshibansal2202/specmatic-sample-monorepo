@@ -1,0 +1,76 @@
+{
+  "id": "bff-rest-java-spring-boot",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring-boot",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.19.1",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_version": "6.0",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw -DskipTests generate-test-resources",
+  "generated_files": [
+    "pom.xml",
+    "mvnw",
+    "mvnw.cmd",
+    "specmatic.yaml",
+    "src/main/java/io/specmatic/samples/bff/BffApplication.java",
+    "src/main/java/io/specmatic/samples/bff/AppConfig.java",
+    "src/main/java/io/specmatic/samples/bff/BffController.java",
+    "src/main/java/io/specmatic/samples/bff/ApiExceptionHandler.java",
+    "src/main/java/io/specmatic/samples/bff/ErrorResponse.java",
+    "src/main/java/io/specmatic/samples/bff/HeaderItem.java",
+    "src/main/java/io/specmatic/samples/bff/IdResponse.java",
+    "src/main/java/io/specmatic/samples/bff/MonitorBackendResponse.java",
+    "src/main/java/io/specmatic/samples/bff/MonitorRequest.java",
+    "src/main/java/io/specmatic/samples/bff/MonitorResponse.java",
+    "src/main/java/io/specmatic/samples/bff/Order.java",
+    "src/main/java/io/specmatic/samples/bff/OrderBase.java",
+    "src/main/java/io/specmatic/samples/bff/Product.java",
+    "src/main/java/io/specmatic/samples/bff/ProductBase.java",
+    "src/main/java/io/specmatic/samples/bff/ProductAuditPublisher.java",
+    "src/main/java/io/specmatic/samples/bff/ProductAuditMessage.java",
+    "src/main/java/io/specmatic/samples/bff/ProductType.java",
+    "src/main/resources/application.yml",
+    "src/test/java/io/specmatic/samples/bff/SpecmaticCliRunner.java",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 92,
+      "maxMissedOperationsInSpec": 1,
+      "enforce": true
+    }
+  },
+  "infraEndpoints": ["/actuator/health", "/actuator/mappings"],
+  "coverageExclusionMode": "filter",
+  "learnings": [
+    "Initial generation uses Specmatic v3 runOptions nested under service references, matching the Enterprise runtime guidance in this skill.",
+    "Product creation maps to the REST /products dependency and publishes the AsyncAPI product audit message to product-queries.",
+    "The local verification environment runs OpenJDK 17, so the sample targets Java 17 while keeping Spring Boot 3.5.3.",
+    "Jackson scalar coercion is disabled and request bodies are explicitly type-checked so negative OpenAPI tests that mutate fields return the contract-declared 400 response.",
+    "The BFF contract marks GET /orders as WIP and does not define a 4xx response for invalid orderId. Specmatic reports those generated scenarios as WIP/aborted, not failures.",
+    "Final OpenAPI API coverage is 92%; the untested operation is GET /findAvailableProducts 429, which has no example in the contract."
+  ]
+}

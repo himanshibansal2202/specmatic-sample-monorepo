@@ -1,0 +1,89 @@
+version: 3
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/productSearchBff"
+    runOptions:
+      $ref: "#/components/runOptions/productSearchBffTest"
+
+dependencies:
+  services:
+    - service:
+        $ref: "#/components/services/orderApi"
+        runOptions:
+          $ref: "#/components/runOptions/orderApiMock"
+    - service:
+        $ref: "#/components/services/productAuditsKafka"
+        runOptions:
+          $ref: "#/components/runOptions/productAuditsKafkaMock"
+  settings:
+    startTimeoutInMilliseconds: 10000
+
+specmatic:
+  governance:
+    report:
+      formats:
+        - html
+        - ctrf
+      outputDirectory: build/reports/specmatic
+    successCriteria:
+      minCoveragePercentage: 92
+      maxMissedOperationsInSpec: 1
+      enforce: true
+  settings:
+    test:
+      schemaResiliencyTests: all
+      timeoutInMilliseconds: 6000
+
+components:
+  sources:
+    specmaticOrderContracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    productSearchBff:
+      description: Product Search BFF
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/product_search_bff_v6.yaml
+    orderApi:
+      description: Order API dependency
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+    productAuditsKafka:
+      description: Product audits Kafka dependency
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/asyncapi/kafka.yaml
+  runOptions:
+    productSearchBffTest:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+        actuatorUrl: "{SUT_BASE_URL:http://localhost:8080}/actuator/mappings"
+        filter: "PATH!='/actuator/health,/actuator/mappings'"
+    orderApiMock:
+      openapi:
+        type: mock
+        host: "{STUB_HOST:localhost}"
+        port: "{STUB_PORT:8090}"
+    productAuditsKafkaMock:
+      asyncapi:
+        type: mock
+        inMemoryBroker:
+          host: "{KAFKA_HOST:localhost}"
+          port: "{KAFKA_PORT:9092}"
+          logDir: build/specmatic-kafka-logs
+        servers:
+          - host: "{KAFKA_BROKER:localhost:9092}"
+            protocol: kafka
