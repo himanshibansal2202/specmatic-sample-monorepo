@@ -1,7 +1,0 @@
-target/
-build/
-.specmatic/
-.idea/
-*.iml
-*.log
-dependency-reduced-pom.xml

@@ -1,6 +1,0 @@
-target/
-.specmatic/
-.specmatic_grpc_working_dir/
-build/
-*.log
-.DS_Store
