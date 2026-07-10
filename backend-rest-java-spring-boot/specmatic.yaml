@@ -1,0 +1,44 @@
+version: 3
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/orderApiV5"
+    runOptions:
+      $ref: "#/components/runOptions/orderApiTest"
+
+specmatic:
+  governance:
+    report:
+      formats:
+        - ctrf
+        - html
+      outputDirectory: build/reports/specmatic
+    successCriteria:
+      minCoveragePercentage: 68
+      maxMissedOperationsInSpec: 10
+      enforce: true
+  settings:
+    test:
+      schemaResiliencyTests: all
+
+components:
+  sources:
+    orderContracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    orderApiV5:
+      description: Order API V5
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/orderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+  runOptions:
+    orderApiTest:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+        filter: "PATH!='/actuator/.*'"
+        actuatorUrl: "{SUT_BASE_URL:http://localhost:8080}/actuator/mappings"

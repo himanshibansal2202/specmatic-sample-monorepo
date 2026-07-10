@@ -1,0 +1,72 @@
+{
+  "id": "backend-rest-java-spring-boot",
+  "application_type": "backend",
+  "protocol": "rest",
+  "language": "java",
+  "framework": "spring-boot",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.19.1",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_version": "5.0",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw dependency:go-offline",
+  "generated_files": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".mvn/wrapper/maven-wrapper.properties",
+    ".specmatic-sample-manifest.json",
+    "Dockerfile",
+    "README.md",
+    "assets/specmatic-order-backend-architecture.gif",
+    "mvnw",
+    "mvnw.cmd",
+    "pom.xml",
+    "specmatic.yaml",
+    "src/main/java/io/specmatic/samples/order/OrderApiApplication.java",
+    "src/main/java/io/specmatic/samples/order/model/ErrorResponseBody.java",
+    "src/main/java/io/specmatic/samples/order/model/IdResponse.java",
+    "src/main/java/io/specmatic/samples/order/model/Order.java",
+    "src/main/java/io/specmatic/samples/order/model/OrderRequest.java",
+    "src/main/java/io/specmatic/samples/order/model/OrderStatus.java",
+    "src/main/java/io/specmatic/samples/order/model/OrderUpdate.java",
+    "src/main/java/io/specmatic/samples/order/model/Product.java",
+    "src/main/java/io/specmatic/samples/order/model/ProductRequest.java",
+    "src/main/java/io/specmatic/samples/order/model/ProductType.java",
+    "src/main/java/io/specmatic/samples/order/service/InventoryService.java",
+    "src/main/java/io/specmatic/samples/order/store/InMemoryStore.java",
+    "src/main/java/io/specmatic/samples/order/web/ApiController.java",
+    "src/main/java/io/specmatic/samples/order/web/ApiExceptionHandler.java",
+    "src/main/java/io/specmatic/samples/order/web/BadRequestException.java",
+    "src/main/java/io/specmatic/samples/order/web/ResourceNotFoundException.java",
+    "src/main/java/io/specmatic/samples/order/web/SpecmaticResponseCodeFilter.java",
+    "src/main/resources/application.properties",
+    "src/test/java/io/specmatic/samples/order/ContractTest.java"
+  ],
+  "testCoverage": {
+    "level1_none": {"tests": 31, "passed": 31, "failed": 0},
+    "level2_positiveOnly": {"tests": 74, "passed": 74, "failed": 0},
+    "level3_all": {"tests": 293, "passed": 293, "failed": 0},
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 68,
+      "maxMissedOperationsInSpec": 10,
+      "enforce": true
+    }
+  },
+  "learnings": [
+    "Spring Boot 4 uses the Jackson 3 tools.jackson.databind namespace for ObjectMapper.",
+    "Full resiliency requires honoring Specmatic-Response-Code before Spring MVC coercion so contract-declared 4xx responses are returned for malformed requests.",
+    "Generated Java target was set to 17 so the sample verifies with the locally available JDK while keeping Spring Boot 4.1.0."
+  ]
+}
