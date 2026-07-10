@@ -1,0 +1,25 @@
+name: BFF REST Kotlin Ktor CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: ./scripts/test.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bff-rest-kotlin-ktor-specmatic-reports
+          path: build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        run: docker build -t bff-rest-kotlin-ktor .

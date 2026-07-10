@@ -1,0 +1,56 @@
+{
+  "id": "bff-rest-kotlin-ktor",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "kotlin",
+  "framework": "ktor",
+  "data_layer": "in-memory",
+  "integration_mode": "docker-cli",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.1",
+    "source": "docker-hub",
+    "invocation": "docker run"
+  },
+  "contract_version": "6.0",
+  "port": 8080,
+  "test_command": "./scripts/test.sh",
+  "install_command": "docker build -t bff-rest-kotlin-ktor .",
+  "generated_files": [
+    "pom.xml",
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "specmatic.yaml",
+    "scripts/test.sh",
+    "src/main/kotlin/io/specmatic/samples/bff/Application.kt",
+    "Dockerfile",
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 92,
+      "maxMissedOperationsInSpec": 1,
+      "enforce": true
+    }
+  },
+  "infraEndpoints": ["/health"],
+  "coverageExclusionMode": "filter",
+  "learnings": [
+    "Docker CLI mode runs the Ktor app and Specmatic Enterprise container on a shared Docker network so the app can call REST and Kafka dependency mocks exposed from the Specmatic container.",
+    "Ktor does not provide a Spring-style actuator mappings endpoint for Specmatic endpoint discovery; the sample excludes the generated /health infrastructure endpoint with the OpenAPI filter and enforces coverage from the Specmatic report."
+  ]
+}

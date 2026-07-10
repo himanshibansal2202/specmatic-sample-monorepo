@@ -58,6 +58,27 @@ jobs:
           name: bff-rest-java-spring-boot-specmatic-reports-${{ matrix.os }}
           path: bff-rest-java-spring-boot/build/reports/specmatic
 
+  bff-rest-kotlin-ktor:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bff-rest-kotlin-ktor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: ./scripts/test.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bff-rest-kotlin-ktor-specmatic-reports
+          path: bff-rest-kotlin-ktor/build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        run: docker build -t bff-rest-kotlin-ktor .
+
   backend-rest-typescript-express:
     runs-on: ubuntu-latest
     defaults:
