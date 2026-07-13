@@ -132,3 +132,31 @@ jobs:
           if-no-files-found: ignore
       - name: Build Docker image
         run: docker build -t frontend-rest-typescript-react .
+
+  bff-rest-typescript-express:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bff-rest-typescript-express
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: bff-rest-typescript-express/package-lock.json
+      - uses: docker/setup-buildx-action@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: npm test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bff-rest-typescript-express-specmatic-reports
+          path: bff-rest-typescript-express/build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        run: docker build -t bff-rest-typescript-express .

@@ -1,0 +1,6 @@
+node_modules/
+dist/
+build/
+.specmatic/
+.env
+npm-debug.log*

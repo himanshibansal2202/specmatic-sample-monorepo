@@ -1,0 +1,59 @@
+{
+  "id": "bff-rest-typescript-express",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "typescript",
+  "framework": "express",
+  "data_layer": "in-memory",
+  "integration_mode": "docker-cli",
+  "specmaticRuntime": {
+    "artifact": "specmatic/enterprise",
+    "version": "1.19.1",
+    "source": "docker-hub",
+    "invocation": "docker run"
+  },
+  "contract_version": "6.0",
+  "port": 8080,
+  "test_command": "npm test",
+  "install_command": "npm install",
+  "generated_files": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "src/config.ts",
+    "src/backendClient.ts",
+    "src/auditPublisher.ts",
+    "src/server.ts",
+    "scripts/test.sh",
+    "specmatic.yaml",
+    "Dockerfile",
+    ".dockerignore",
+    ".gitignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 92,
+      "maxMissedOperationsInSpec": 1,
+      "enforce": true
+    }
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "Specmatic Enterprise AsyncAPI mock for the Kafka dependency requires a reachable broker for the contract-declared localhost:9092 server. The generated test runner starts a disposable Redpanda broker and runs the BFF and Specmatic containers in the broker container's network namespace so all contract endpoints resolve via localhost.",
+    "The BFF contract marks GET /orders as WIP. Specmatic reports those scenarios as WIP/aborted, but they are not failures. Final level 3 verification completed with 228 tests, 224 successes, 0 failures, 4 WIP, and 0 errors.",
+    "OpenAPI API coverage measured 92% because GET /findAvailableProducts 429 is not exercised by the available examples/generative cases and GET /orders 400 appears as a WIP missing-in-spec case during negative testing. Governance is enforced at the measured final threshold."
+  ]
+}

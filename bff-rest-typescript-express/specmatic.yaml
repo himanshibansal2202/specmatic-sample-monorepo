@@ -1,0 +1,80 @@
+version: 3
+
+systemUnderTest:
+  service:
+    $ref: "#/components/services/productSearchBff"
+    runOptions:
+      $ref: "#/components/runOptions/productSearchBffTest"
+
+dependencies:
+  services:
+    - service:
+        $ref: "#/components/services/orderApi"
+        runOptions:
+          $ref: "#/components/runOptions/orderApiMock"
+    - service:
+        $ref: "#/components/services/productAuditKafka"
+        runOptions:
+          $ref: "#/components/runOptions/productAuditKafkaMock"
+  settings:
+    startTimeoutInMilliseconds: 30000
+
+specmatic:
+  governance:
+    report:
+      formats:
+        - html
+        - ctrf
+      outputDirectory: "{SPECMATIC_REPORT_DIR:build/reports/specmatic}"
+    successCriteria:
+      minCoveragePercentage: 92
+      maxMissedOperationsInSpec: 1
+      enforce: true
+  settings:
+    test:
+      timeoutInMilliseconds: 6000
+      schemaResiliencyTests: all
+
+components:
+  sources:
+    specmaticOrderContracts:
+      git:
+        url: https://github.com/specmatic/specmatic-order-contracts.git
+  services:
+    productSearchBff:
+      description: Product Search BFF V6
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/product_search_bff_v6.yaml
+    orderApi:
+      description: Order API V5
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/openapi/api_order_v5.yaml
+    productAuditKafka:
+      description: Product audit Kafka dependency
+      definitions:
+        - definition:
+            source:
+              $ref: "#/components/sources/specmaticOrderContracts"
+            specs:
+              - io/specmatic/examples/store/asyncapi/kafka.yaml
+  runOptions:
+    productSearchBffTest:
+      openapi:
+        type: test
+        baseUrl: "{SUT_BASE_URL:http://localhost:8080}"
+    orderApiMock:
+      openapi:
+        type: mock
+        baseUrl: "{STUB_BASE_URL:http://localhost:8090}"
+    productAuditKafkaMock:
+      asyncapi:
+        type: mock
+        brokerUrl: "{KAFKA_BROKER_URL:localhost:9092}"
