@@ -27,7 +27,6 @@ Issues encountered during AI-assisted generation — cases where the model hallu
 |--------|-------|------------|
 | backend-rest-java-spring-boot | Model attempted `native` integration mode, which has no verified Enterprise-native JVM artifact. | Corrected to `cli` mode. |
 | bff-rest-kotlin-ktor | Model set `minCoveragePercentage: 0` — it assumed the license key was missing and silently disabled governance. The key is auto-discovered from the contract repo. | Regenerated with correct governance enforcement. |
-| bff-rest-typescript-express | Model initially ran Specmatic Docker container without a Kafka broker, assuming the AsyncAPI mock doesn't need one. The mock validates message shape against a real broker connection. | Added a disposable Redpanda broker to the test runner's network namespace. |
 
 ## Integration Modes Covered
 
