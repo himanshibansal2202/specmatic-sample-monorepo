@@ -58,6 +58,36 @@ jobs:
           name: bff-rest-java-spring-boot-specmatic-reports-${{ matrix.os }}
           path: bff-rest-java-spring-boot/build/reports/specmatic
 
+  bff-graphql-java-spring-boot:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: bff-graphql-java-spring-boot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        run: ./mvnw test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bff-graphql-java-spring-boot-specmatic-reports-${{ matrix.os }}
+          path: bff-graphql-java-spring-boot/build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        if: matrix.os == 'ubuntu-latest'
+        run: docker build -t bff-graphql-java-spring-boot .
+
   bff-rest-kotlin-ktor:
     runs-on: ubuntu-latest
     defaults:

@@ -1,0 +1,13 @@
+server:
+  port: ${SUT_PORT:8080}
+
+spring:
+  application:
+    name: bff-graphql-java-spring-boot
+  graphql:
+    path: /graphql
+
+backend:
+  base-url: ${STUB_BASE_URL:http://127.0.0.1:8090}
+  authenticate-header: ${BACKEND_AUTHENTICATE:sample-api-key}
+  idempotency-key: ${BACKEND_IDEMPOTENCY_KEY:00000000-0000-0000-0000-000000000001}

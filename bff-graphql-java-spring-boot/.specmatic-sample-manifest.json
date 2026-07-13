@@ -1,0 +1,68 @@
+{
+  "id": "bff-graphql-java-spring-boot",
+  "application_type": "bff",
+  "protocol": "graphql",
+  "language": "java",
+  "framework": "spring-boot",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.19.1",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_version": "products_bff.graphqls",
+  "port": 8080,
+  "test_command": "./mvnw test",
+  "install_command": "./mvnw -q -DskipTests test-compile",
+  "generated_files": [
+    "pom.xml",
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/wrapper/maven-wrapper.properties",
+    "src/main/resources/application.yml",
+    "src/main/resources/graphql/schema.graphqls",
+    "src/main/java/io/specmatic/examples/bffgraphql/BffGraphqlApplication.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/ProductType.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/Product.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/NewProductInput.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/Offer.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/BackendProperties.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/AppConfig.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/BackendProductClient.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/ProductGraphqlController.java",
+    "src/main/java/io/specmatic/examples/bffgraphql/GraphqlDateScalarConfig.java",
+    "specmatic.yaml",
+    "scripts/test.sh",
+    ".gitignore",
+    ".dockerignore",
+    "Dockerfile",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    ".specmatic-sample-manifest.json"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 3, "passed": 3, "failed": 0 },
+    "level2_positiveOnly": { "tests": 29, "passed": 29, "failed": 0 },
+    "level3_all": { "tests": 84, "passed": 84, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": null
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": null,
+  "learnings": [
+    "The provided REST dependency spec does not contain an offers endpoint, so findOffersForDate is implemented as BFF-owned behavior from the GraphQL contract.",
+    "Official v3 configuration pages do not show a GraphQL runOptions example; Enterprise 1.19.1 accepts the graphqlsdl runOptions key with host and port.",
+    "Enterprise 1.19.1 accepts specmatic.governance.report.formats for HTML and CTRF report configuration.",
+    "Test defaults use 127.0.0.1 instead of localhost so the Spring client and Specmatic mock use the same IPv4 loopback address.",
+    "The REST dependency models pageSize as a header on GET /products, so the BFF forwards the optional GraphQL pageSize argument as that header.",
+    "Specmatic's console reports 84 tests for schemaResiliencyTests: all while the generated CTRF summary records 81 report entries for the same passing run.",
+    "The GraphQL Date scalar wraps parse failures in coercion exceptions so invalid date literals produce GraphQL errors instead of framework 500 JSON."
+  ]
+}
