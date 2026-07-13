@@ -1,0 +1,10 @@
+.specmatic/
+build/
+dist/
+coverage/
+*.log
+*.test
+*.out
+vendor/
+.env
+.DS_Store

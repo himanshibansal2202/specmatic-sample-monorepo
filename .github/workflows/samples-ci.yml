@@ -109,6 +109,41 @@ jobs:
       - name: Build Docker image
         run: docker build -t bff-rest-kotlin-ktor .
 
+  bff-rest-go-gin:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: bff-rest-go-gin
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+          cache-dependency-path: bff-rest-go-gin/go.sum
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Run contract tests
+        env:
+          SPECMATIC_LICENSE_KEY: ${{ secrets.SPECMATIC_LICENSE_KEY }}
+        shell: bash
+        run: ./scripts/test.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bff-rest-go-gin-specmatic-reports-${{ matrix.os }}
+          path: bff-rest-go-gin/build/reports/specmatic
+          if-no-files-found: ignore
+      - name: Build Docker image
+        if: matrix.os == 'ubuntu-latest'
+        run: docker build -t bff-rest-go-gin .
+
   backend-rest-typescript-express:
     runs-on: ubuntu-latest
     defaults:

@@ -1,0 +1,94 @@
+{
+  "id": "bff-rest-go-gin",
+  "application_type": "bff",
+  "protocol": "rest",
+  "language": "go",
+  "framework": "gin",
+  "data_layer": "in-memory",
+  "integration_mode": "cli",
+  "specmaticRuntime": {
+    "artifact": "io.specmatic.enterprise:executable-all",
+    "version": "1.19.1",
+    "source": "maven-central",
+    "invocation": "java -jar"
+  },
+  "contract_version": "6.0",
+  "port": 8080,
+  "test_command": "./scripts/test.sh",
+  "install_command": "go mod download",
+  "generated_files": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".specmatic-sample-manifest.json",
+    "Dockerfile",
+    "README.md",
+    "assets/specmatic-order-bff-architecture.gif",
+    "cmd/server/main.go",
+    "go.mod",
+    "go.sum",
+    "internal/app/json.go",
+    "internal/app/models.go",
+    "internal/app/router.go",
+    "internal/config/config.go",
+    "internal/dependencies/backend.go",
+    "internal/dependencies/kafka.go",
+    "scripts/test.cmd",
+    "scripts/test.ps1",
+    "scripts/test.sh",
+    "specmatic.yaml"
+  ],
+  "testCoverage": {
+    "level1_none": { "tests": 18, "passed": 17, "failed": 0 },
+    "level2_positiveOnly": { "tests": 34, "passed": 32, "failed": 0 },
+    "level3_all": { "tests": 228, "passed": 224, "failed": 0 },
+    "shipped_level": "all"
+  },
+  "reports": {
+    "formats": ["html", "ctrf"],
+    "outputDirectory": "build/reports/specmatic",
+    "coverageGovernance": {
+      "minCoveragePercentage": 92,
+      "maxMissedOperationsInSpec": 1,
+      "enforce": true
+    }
+  },
+  "infraEndpoints": [],
+  "coverageExclusionMode": "filter",
+  "learnings": [
+    "The host Go toolchain was not installed on PATH, so Go compile/test verification was run with the official golang:1.26.5 Docker image.",
+    "Specmatic full resiliency found a WIP-only GET /orders 400 response path that is not documented in the BFF spec; coverage governance is enforced at the measured 92% coverage with maxMissedOperationsInSpec set to 1."
+  ],
+  "contractMappings": [
+    {
+      "sut": "POST /products",
+      "dependency": "POST /products",
+      "adapter": "Forwards ProductBase JSON, adds Authenticate and Idempotency-Key for the backend contract, preserves Specmatic-Response-Code, and publishes the resulting product to Kafka when the backend returns 201."
+    },
+    {
+      "sut": "GET /findAvailableProducts",
+      "dependency": "GET /products",
+      "adapter": "Forwards type, from-date, to-date, and pageSize to the backend mock and returns the backend response body."
+    },
+    {
+      "sut": "POST /orders",
+      "dependency": "POST /orders",
+      "adapter": "Forwards OrderBase JSON, adds Authenticate and Idempotency-Key for the backend contract, preserves Specmatic-Response-Code, and returns the backend response body."
+    },
+    {
+      "sut": "GET /orders",
+      "dependency": "GET /orders",
+      "adapter": "Forwards orderId when present and returns the backend response body."
+    },
+    {
+      "sut": "GET /monitor/{id}",
+      "dependency": "none",
+      "adapter": "Synthesizes monitor status because this workflow is declared by the BFF contract."
+    },
+    {
+      "sut": "product workflow side effect",
+      "dependency": "AsyncAPI receive product on product-queries",
+      "adapter": "Publishes a JSON product message with id, name, inventory, and categories to the Specmatic in-memory Kafka broker."
+    }
+  ]
+}

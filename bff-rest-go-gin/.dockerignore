@@ -1,0 +1,9 @@
+.git
+.github
+.specmatic
+build
+dist
+coverage
+*.log
+.env
+README.md
